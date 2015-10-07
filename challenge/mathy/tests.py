@@ -3,6 +3,8 @@ import json
 
 from django.test import TestCase
 from django.test import Client
+from django.core.urlresolvers import reverse
+
 
 from .models import Solution
 from .api import SolutionApiView
@@ -46,7 +48,7 @@ class SolutionTests(TestCase):
         '''
         n = random.randint(1,100)
         client = Client()
-        response = client.get('difference?number=%s'% n,
+        response = client.get('%s?number=%s'% (reverse('mathy:difference'), n),
                         HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(response.status_code, 200, 'Response returned %d' %
                          response.status_code)
@@ -57,7 +59,7 @@ class SolutionTests(TestCase):
         self.assertIn('occurences', result,'Response does not have an occurence')
     
         self.assertEquals(result['value'], naive_square_of_sum(n)-naive_sum_of_squares(n),
-            'Value is not equal to computed test value for %' % n)
+            'Value is not equal to computed test value for %s' % n)
             
     def test_out_of_bounds(self):
         '''
@@ -74,7 +76,7 @@ class SolutionTests(TestCase):
         '''
         n = random.randint(1,100)
         client = Client()
-        response = client.get('difference?number=%s'%n,
+        response = client.get('%s?number=%s'% (reverse('mathy:difference'), n),
                         HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(response.status_code, 200, 'Response returned %d' %
                          response.status_code)
