@@ -61,11 +61,39 @@ class SolutionTests(TestCase):
         self.assertEquals(result['value'], naive_square_of_sum(n)-naive_sum_of_squares(n),
             'Value is not equal to computed test value for %s' % n)
             
-    def test_out_of_bounds(self):
+    def test_bounds(self):
         '''
-            Less than 0, more than 100
+            Less than 1, more than 100 should error
         '''
-        self.fail('Not implemented')
+        client = Client()
+        #less than 1
+        response = client.get('%s?number=%s'% (reverse('mathy:difference'), 0),
+                        HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.status_code, 400, 'Response returned %d' %
+                         response.status_code)
+        #more than 100
+        response = client.get('%s?number=%s'% (reverse('mathy:difference'), 105),
+                        HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.status_code, 400, 'Response returned %d' %
+                         response.status_code)
+        #100
+        response = client.get('%s?number=%s'% (reverse('mathy:difference'), 100),
+                        HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.status_code, 200, 'Response returned %d' %
+                         response.status_code)
+        #1
+        response = client.get('%s?number=%s'% (reverse('mathy:difference'), 1),
+                        HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.status_code, 200, 'Response returned %d' %
+                         response.status_code)
+                         
+                         
+    def test_no_query_param(self):
+        client = Client()
+        response = client.get(reverse('mathy:difference'),
+                        HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.status_code, 400, 'Response returned %d' %
+                         response.status_code)
         
     def test_increment_of_occurence(self):
         self.fail('Not implemented')

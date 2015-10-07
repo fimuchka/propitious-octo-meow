@@ -26,6 +26,10 @@ class SolutionApiView(View):
         n = request.GET.get('number')
         if n:
             n = int(n)
+            if n < 1 or n > 100:
+                return JsonResponse({
+                'error': 'Please provide a number between 1 and 100'}, 
+                status=400)
             try:
                 solution = Solution.objects.get(number=n)
                 solution.occurences += 1
