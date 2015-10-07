@@ -46,7 +46,7 @@ class SolutionTests(TestCase):
         '''
         n = random.randint(1,100)
         client = Client()
-        response = client.get('difference?number=%'%n,
+        response = client.get('difference?number=%s'% n,
                         HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(response.status_code, 200, 'Response returned %d' %
                          response.status_code)
@@ -74,7 +74,7 @@ class SolutionTests(TestCase):
         '''
         n = random.randint(1,100)
         client = Client()
-        response = client.get('difference?number=%'%n,
+        response = client.get('difference?number=%s'%n,
                         HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(response.status_code, 200, 'Response returned %d' %
                          response.status_code)
