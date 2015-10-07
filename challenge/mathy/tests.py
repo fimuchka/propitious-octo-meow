@@ -5,6 +5,7 @@ from django.test import TestCase
 from django.test import Client
 
 from .models import Solution
+from .api import SolutionApiView
 
 def naive_sum_of_squares(n):
     result = 0
@@ -23,20 +24,19 @@ class SolutionTests(TestCase):
         Compares the naive method used in 
         the test to the formula used in the app
         '''
-        self.fail("Not implemented")
+
         n = random.randint(1,100)
-        #self.assertEqual(naive_sum_of_squares(n),
-        #                    sum_of_squares(n), 'Wrong sum of squares result')
+        self.assertEqual(naive_sum_of_squares(n),
+                            SolutionApiView.sum_of_squares(n), 'Wrong sum of squares result')
 
     def test_square_of_sums(self):
         '''
         Compares the naive method used in 
         the test to the formula used in the app
         '''
-        self.fail("Not implemented")
         n = random.randint(1,100)
-        #self.assertEqual(naive_square_of_sums(n),
-        #                    square_of_sums(n), 'Wrong sum of squares result')
+        self.assertEqual(naive_square_of_sum(n),
+                           SolutionApiView.square_of_sum(n), 'Wrong sum of squares result')
         
     def test_correct_result(self):
         '''
