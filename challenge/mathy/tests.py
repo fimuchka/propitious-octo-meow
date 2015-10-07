@@ -96,7 +96,27 @@ class SolutionTests(TestCase):
                          response.status_code)
         
     def test_increment_of_occurence(self):
-        self.fail('Not implemented')
+        '''
+            Get the same number twice to make sure occurences is incremented
+            properly
+        '''
+        n = random.randint(1,100)
+        client = Client()
+        response = client.get('%s?number=%s'% (reverse('mathy:difference'), n),
+                        HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.status_code, 200, 'Response returned %d' %
+                         response.status_code)
+        result = json.loads(response.content)
+        self.assertEquals(result['occurences'], 1, 
+                'First occurence is not 1, is %s' % result['occurences'])
+        
+        response = client.get('%s?number=%s'% (reverse('mathy:difference'), n),
+                        HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.status_code, 200, 'Response returned %d' %
+                         response.status_code)
+        result = json.loads(response.content)
+        self.assertEquals(result['occurences'], 2, 
+                'Second occurence is not 2, is %s' % result['occurences'])
         
     def test_created_in_db(self):
         '''
