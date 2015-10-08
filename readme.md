@@ -9,6 +9,7 @@ Installation
 0. Create a virtual environment `mkvirtualenv challenge`
 1. Clone this repository 
 2. From within the repository root, install project dependencies `pip install -r requirements.txt
-3. Run ./python manage.py runserver
-4. Use the url localhost:8000/difference?number=n and try different n's to see result
+3. Run ./python manage.py migrate 
+4. Run ./python manage.py runserver
+5. Use the url localhost:8000/difference?number=n and try different n's to see result
 
